@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class QuizManager : MonoBehaviour
 {
+    private enum UIType { QuizCollectionUI, QuizCreationUI, NewQuizUI, AddQuestionUI, QuizPreviewUI, QuizResultsUI }
+
     [SerializeField]
     private string jsonTextFileName;
     [SerializeField]
@@ -32,14 +34,23 @@ public class QuizManager : MonoBehaviour
 #endif
     }
 
+    /// <summary>
+    /// Activates the specified UI and Deactivates the rest. Only one UI will be active at a time.
+    /// </summary>
+    /// <param name="uiType"></param>
+    private void SwitchUI(UIType uiType)
+    {
+        userInterface.quizCollectionUI.gameObject.SetActive(uiType == UIType.QuizCollectionUI);
+        userInterface.quizCreationUI.gameObject.SetActive(uiType == UIType.QuizCreationUI);
+        userInterface.newQuizUI.gameObject.SetActive(uiType == UIType.NewQuizUI);
+        userInterface.addQuestionUI.gameObject.SetActive(uiType == UIType.AddQuestionUI);
+        userInterface.quizPreviewUI.gameObject.SetActive(uiType == UIType.QuizPreviewUI);
+        userInterface.quizResultsUI.gameObject.SetActive(uiType == UIType.QuizResultsUI);
+    }
+
     private void Awake()
     {
-        userInterface.quizCollectionUI.gameObject.SetActive(true);
-        userInterface.quizCreationUI.gameObject.SetActive(false);
-        userInterface.newQuizUI.gameObject.SetActive(false);
-        userInterface.addQuestionUI.gameObject.SetActive(false);
-        userInterface.quizPreviewUI.gameObject.SetActive(false);
-        userInterface.quizResultsUI.gameObject.SetActive(false);
+        SwitchUI(UIType.QuizCollectionUI);
 
         using (var reader = new StreamReader(Application.streamingAssetsPath + "/Data/" + jsonTextFileName))
         {
@@ -51,22 +62,12 @@ public class QuizManager : MonoBehaviour
 
         userInterface.quizCollectionUI.CreateQuizButton.onClick.AddListener(() =>
         {
-            userInterface.quizResultsUI.gameObject.SetActive(false);
-            userInterface.quizPreviewUI.gameObject.SetActive(false);
-            userInterface.quizCollectionUI.gameObject.SetActive(false);
-            userInterface.quizCreationUI.gameObject.SetActive(false);
-            userInterface.addQuestionUI.gameObject.SetActive(false);
-            userInterface.newQuizUI.gameObject.SetActive(true);
+            SwitchUI(UIType.NewQuizUI);
         });
 
         userInterface.quizCreationUI.AddQuestionButton.onClick.AddListener(() =>
         {
-            userInterface.quizResultsUI.gameObject.SetActive(false);
-            userInterface.quizPreviewUI.gameObject.SetActive(false);
-            userInterface.quizCollectionUI.gameObject.SetActive(false);
-            userInterface.quizCreationUI.gameObject.SetActive(false);
-            userInterface.newQuizUI.gameObject.SetActive(false);
-            userInterface.addQuestionUI.gameObject.SetActive(true);
+            SwitchUI(UIType.AddQuestionUI);
             userInterface.addQuestionUI.Launch(selectedQuizData);
         });
 
@@ -74,23 +75,13 @@ public class QuizManager : MonoBehaviour
         {
             userInterface.addQuestionUI.WriteToQuizData();
             Save();
-            userInterface.quizResultsUI.gameObject.SetActive(false);
-            userInterface.quizPreviewUI.gameObject.SetActive(false);
-            userInterface.quizCollectionUI.gameObject.SetActive(false);
-            userInterface.newQuizUI.gameObject.SetActive(false);
-            userInterface.addQuestionUI.gameObject.SetActive(false);
-            userInterface.quizCreationUI.gameObject.SetActive(true);
+            SwitchUI(UIType.QuizCreationUI);
             userInterface.quizCreationUI.OpenQuiz(selectedQuizData);
         });
 
         userInterface.quizCreationUI.PreviewQuizButton.onClick.AddListener(() =>
         {
-            userInterface.quizResultsUI.gameObject.SetActive(false);
-            userInterface.quizCollectionUI.gameObject.SetActive(false);
-            userInterface.newQuizUI.gameObject.SetActive(false);
-            userInterface.addQuestionUI.gameObject.SetActive(false);
-            userInterface.quizCreationUI.gameObject.SetActive(false);
-            userInterface.quizPreviewUI.gameObject.SetActive(true);
+            SwitchUI(UIType.QuizPreviewUI);
             userInterface.quizPreviewUI.PreviewQuiz(selectedQuizData.questionList.First);
             quizInstanceData.score = 0;
             quizInstanceData.questionIndex = 1;
@@ -99,25 +90,13 @@ public class QuizManager : MonoBehaviour
 
         userInterface.quizResultsUI.BackButton.onClick.AddListener(() =>
         {
-            userInterface.quizPreviewUI.gameObject.SetActive(false);
-            userInterface.quizResultsUI.gameObject.SetActive(false);
-            userInterface.quizCollectionUI.gameObject.SetActive(false);
-            userInterface.newQuizUI.gameObject.SetActive(false);
-            userInterface.addQuestionUI.gameObject.SetActive(false);
-            userInterface.quizCreationUI.gameObject.SetActive(true);
-
+            SwitchUI(UIType.QuizCreationUI);
             userInterface.quizCreationUI.OpenQuiz(selectedQuizData);
         });
 
         userInterface.quizCreationUI.BackButton.onClick.AddListener(() =>
         {
-            userInterface.quizPreviewUI.gameObject.SetActive(false);
-            userInterface.quizResultsUI.gameObject.SetActive(false);
-            userInterface.quizCollectionUI.gameObject.SetActive(true);
-            userInterface.newQuizUI.gameObject.SetActive(false);
-            userInterface.addQuestionUI.gameObject.SetActive(false);
-            userInterface.quizCreationUI.gameObject.SetActive(true);
-
+            SwitchUI(UIType.QuizCollectionUI);
             userInterface.quizCollectionUI.Populate(quizes);
         });
 
@@ -188,13 +167,7 @@ public class QuizManager : MonoBehaviour
     /// </summary>
     private void OnEndOfQuiz()
     {
-        userInterface.quizCollectionUI.gameObject.SetActive(false);
-        userInterface.newQuizUI.gameObject.SetActive(false);
-        userInterface.addQuestionUI.gameObject.SetActive(false);
-        userInterface.quizCreationUI.gameObject.SetActive(false);
-        userInterface.quizPreviewUI.gameObject.SetActive(false);
-        userInterface.quizResultsUI.gameObject.SetActive(true);
-
+        SwitchUI(UIType.QuizResultsUI);
         userInterface.quizResultsUI.ShowScore(quizInstanceData.score, selectedQuizData.questionList.Count);
     }
 }
