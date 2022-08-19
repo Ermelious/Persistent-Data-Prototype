@@ -8,6 +8,7 @@ public class AddQuestionUI : MonoBehaviour
 {
     [SerializeField]
     private QuizData quizData;
+    [Tooltip("The amount of Options available to each Quiz's Question.")]
     [SerializeField]
     private int amountOfOptions = 3;
     [SerializeField]
