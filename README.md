@@ -6,7 +6,7 @@
 
 ### Customizations
 
-- The number of answer "Options" given to each Quiz's Question can be set by opening the Project in Unity and clicking on the "Add Question Canvas" Game Object in the scene called "SampleScene". In the Inspector, change "Amount Of Options" to desired Amount. Default is set to 3.
+- The number of answer "Options" given to each Quiz's Question can be set by opening the Project in Unity and clicking on the "Add Question Canvas" Game Object in the scene called "SampleScene". In the Inspector, change "Amount Of Options" to desired Amount. The Default amount is set to 3.
 
 # Windows Build
 ![](https://i.ibb.co/zx9KGnt/windows-icon-png-23.png)
