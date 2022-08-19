@@ -126,6 +126,11 @@ public class QuizManager : MonoBehaviour
         userInterface.quizPreviewUI.OnEndOfQuiz += OnEndOfQuiz;
     }
 
+    /// <summary>
+    /// This method creates a new Quiz and adds it to Quizes data list. 
+    /// The Save function can be called soon after this function.
+    /// </summary>
+    /// <param name="quizTitle"></param>
     private void CreateNewQuiz(string quizTitle)
     {
         if (quizes == null)
@@ -141,11 +146,13 @@ public class QuizManager : MonoBehaviour
         selectedQuizData = quizes.data.First.Value;
     }
 
+    /// <summary>
+    /// This function Serializes the Quizes object into JSON format and writes it to the jsonStorage.txt file.
+    /// </summary>
     private void Save()
     {
         try
         {
-
             using (StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/Data/" + jsonTextFileName))
             {
                 writer.Write(JsonConvert.SerializeObject(quizes));
@@ -176,6 +183,9 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This function triggers when the user has no questions left to answer.
+    /// </summary>
     private void OnEndOfQuiz()
     {
         userInterface.quizCollectionUI.gameObject.SetActive(false);

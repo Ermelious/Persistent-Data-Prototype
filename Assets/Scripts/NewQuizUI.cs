@@ -31,6 +31,10 @@ public class NewQuizUI : MonoBehaviour
         { CreateNewQuiz?.Invoke(quizNameInputText.text); });
     }
 
+    /// <summary>
+    /// Adds the action that will be triggered once the Create New Quiz Button is clicked.
+    /// </summary>
+    /// <param name="createNewQuizAction"></param>
     public void Initialize(CreateNewQuizDelegate createNewQuizAction)
     {
         CreateNewQuiz = createNewQuizAction;

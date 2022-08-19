@@ -40,6 +40,10 @@ public class QuizCreationUI : MonoBehaviour
         gridLayoutGroup = GetComponentInChildren<GridLayoutGroup>();
     }
 
+    /// <summary>
+    /// Opens a Quiz by accessing a Quiz Data located in Quizes.
+    /// </summary>
+    /// <param name="quizData"></param>
     public void OpenQuiz(QuizData quizData)
     {
         questionPanelPrefab.DespawnAll();

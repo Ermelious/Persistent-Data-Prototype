@@ -21,7 +21,13 @@ public class QuizPreviewUI : MonoBehaviour
     [SerializeField]
     private LinkedListNode<QuizQuestion> selectedQuizQuestionNode;
     public delegate void SubmitAnswerDelegate(int optionIndex, QuizQuestion quizQuestion);
+    /// <summary>
+    /// This delegate will trigger when the User clicks on the Submit Button. It takes in the selected Toggle Index which was selected by the User as the submitted answer/optionIndex.
+    /// </summary>
     public SubmitAnswerDelegate OnSubmitAnswer;
+    /// <summary>
+    /// This delegate will trigger when the User clicks on the Submit Button AND if the User has no more Questions to answer.
+    /// </summary>
     public System.Action OnEndOfQuiz;
     public TextMeshProUGUI QuizQuestionCountTextMeshProUGUI
     {
@@ -66,6 +72,10 @@ public class QuizPreviewUI : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Reads a Question in a Quiz by accessing a QuizData's Question LinkedList.
+    /// </summary>
+    /// <param name="quizQuestionNode"></param>
     public void PreviewQuiz(LinkedListNode<QuizQuestion> quizQuestionNode)
     {
         questionTextMeshProUGUI.text = quizQuestionNode.Value.question;

@@ -22,6 +22,10 @@ public class QuizCollectionUI : MonoBehaviour
         gridLayoutGroup = GetComponentInChildren<GridLayoutGroup>();
     }
 
+    /// <summary>
+    /// Populates the Quiz Collection UI with existing quizes which were created by the User.
+    /// </summary>
+    /// <param name="quizes"></param>
     public void Populate(Quizes quizes)
     {
         int index = 0;

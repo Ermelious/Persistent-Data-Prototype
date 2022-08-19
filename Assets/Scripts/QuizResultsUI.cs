@@ -26,6 +26,11 @@ public class QuizResultsUI : MonoBehaviour
         BackButton = GetComponentInChildren<Button>();
     }
 
+    /// <summary>
+    /// Updates Quiz Results UI's score text to show the result of the completed Quiz.
+    /// </summary>
+    /// <param name="score"></param>
+    /// <param name="maxScore"></param>
     public void ShowScore(int score, int maxScore)
     {
         ScoreTextMeshProUGUI.text = "Your Score: " + score + " / " + maxScore;
