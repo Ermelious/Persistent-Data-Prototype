@@ -1,7 +1,7 @@
 ### Features
 
 - Reading/Writing to a jsonStorage.txt file.
-- Logic are all in TutorialManager.cs, other Classes will mostly be controlled via Dependency Injection Pattern.
+- Logic are all in QuizManager.cs, other Classes will mostly be controlled via Dependency Injection Pattern.
 - User Interface that has Create and Preview capabilities. There is no Delete or Re-Edit capability due to time constraints.
 
 ### Customizations
